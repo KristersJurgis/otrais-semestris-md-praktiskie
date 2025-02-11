@@ -1,0 +1,94 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Atkartojums_KJ
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            Random random = new Random();
+            int numm = random.Next(1, 101);
+            int guess = 0;
+            int minejumi = 0;
+
+            while (true)
+            {
+                Console.Write("Ievadiet skaitli: ");
+                guess = Convert.ToInt32(Console.ReadLine());
+
+                if (guess < numm)
+                {
+                    Console.WriteLine("Lielāks");
+                    minejumi++;
+                }
+                else if (guess > numm)
+                {
+                    Console.WriteLine("Mazāks");
+                    minejumi++;
+
+                }
+                else if (guess == numm)
+                {
+                    minejumi++;
+                    Console.WriteLine("Skaitlis ir uzminēts!");
+                    Console.WriteLine($"Reizes {minejumi}");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("invalid number");
+                    minejumi++;
+
+                }
+
+            }
+            Otrs();
+        }
+        static void Otrs()
+        {
+            string meig = "slepens";
+            char[] paslepts = new string('_', meig.Length).ToCharArray();
+            int minejums1 = 0;
+
+            while (true)
+            {
+                Console.WriteLine(new string(paslepts));
+                Console.Write("Ievadiet burtu: ");
+                
+                char guess = Char.ToLower(Console.ReadKey().KeyChar);
+                Console.WriteLine();
+
+                bool Vards = false;
+
+                for (int i = 0; i < meig.Length; i++)
+                {
+                    if (meig[i] == guess) 
+                    {
+                        paslepts[i] = guess;
+                        Vards = true;
+                    }
+                    
+                }
+                if (!Vards)
+                {
+                    Console.WriteLine("Tāda burta vārda nav");
+                    minejums1++;
+
+                }
+                if (new string(paslepts) == meig)
+                {
+                    Console.WriteLine($"Vards ir uzminets ar meiģinājumu skaitu: {minejums1}");
+                    break;
+                }
+                minejums1++;
+
+            }
+
+        }
+    }
+}
