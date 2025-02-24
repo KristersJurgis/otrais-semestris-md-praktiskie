@@ -4,91 +4,77 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Atkartojums_KJ
+namespace ConsoleApp1
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
         {
-
-            Random random = new Random();
-            int numm = random.Next(1, 101);
-            int guess = 0;
+            int a = 0;
+            Random rand = new Random();
+            int num = rand.Next(1, 101);
             int minejumi = 0;
-
             while (true)
             {
-                Console.Write("Ievadiet skaitli: ");
-                guess = Convert.ToInt32(Console.ReadLine());
-
-                if (guess < numm)
+                Console.Write("Ievadiet numuru: ");
+                a = Convert.ToInt32(Console.ReadLine());
+                if (a < num)
                 {
                     Console.WriteLine("Lielāks");
                     minejumi++;
                 }
-                else if (guess > numm)
+                else if (a > num)
                 {
                     Console.WriteLine("Mazāks");
                     minejumi++;
-
                 }
-                else if (guess == numm)
+                else if (a == num)
                 {
                     minejumi++;
-                    Console.WriteLine("Skaitlis ir uzminēts!");
+                    Console.WriteLine($"Skaitlis {num} ir uzminēts");
                     Console.WriteLine($"Reizes {minejumi}");
                     break;
                 }
                 else
                 {
-                    Console.WriteLine("invalid number");
+                    Console.WriteLine("Nederīgs numurs");
                     minejumi++;
-
                 }
-
+                
             }
-            Otrs();
+           Otrs();
         }
         static void Otrs()
         {
-            string meig = "slepens";
-            char[] paslepts = new string('_', meig.Length).ToCharArray();
-            int minejums1 = 0;
-
+            String vards ="tresdiena";
+            char[] paslepts = new string('_', vards.Length).ToCharArray();
+            int minejumi2 = 0;
             while (true)
             {
                 Console.WriteLine(new string(paslepts));
                 Console.Write("Ievadiet burtu: ");
-                
-                char guess = Char.ToLower(Console.ReadKey().KeyChar);
+                char minejums = char.ToLower(Console.ReadKey().KeyChar);
                 Console.WriteLine();
-
-                bool Vards = false;
-
-                for (int i = 0; i < meig.Length; i++)
+                bool vaards = false;
+                for (int i = 0; i < vards.Length; i++)
                 {
-                    if (meig[i] == guess) 
+                    if (vards[i] == minejums)
                     {
-                        paslepts[i] = guess;
-                        Vards = true;
+                        paslepts[i] = minejums;
+                        vaards = true;
                     }
-                    
                 }
-                if (!Vards)
+                if (!vaards)
                 {
                     Console.WriteLine("Tāda burta vārda nav");
-                    minejums1++;
-
                 }
-                if (new string(paslepts) == meig)
+                if (new string(paslepts) == vards)
                 {
-                    Console.WriteLine($"Vards ir uzminets ar meiģinājumu skaitu: {minejums1}");
+                    Console.WriteLine($"Vards {vards} ir uzminets ar meiģinājumu skaitu: {minejumi2}");
                     break;
                 }
-                minejums1++;
-
+                minejumi2++;
             }
-
         }
     }
 }
