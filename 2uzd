@@ -1,0 +1,111 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Funkcijas_KJ
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Random rand  = new Random();
+            double[] massivs1 = new double[10];
+            double[] massivs2 = new double[10];
+            for (int i = 0; i < massivs1.Length;  i++)
+            {
+                massivs1[i] = rand.Next(1, 101);
+            }
+            Console.WriteLine(string.Join("    ", massivs1));
+            for (int y = 0; y < massivs2.Length; y++)
+            {
+                massivs2[y] = rand.Next(1, 101);
+            }
+            Console.WriteLine(string.Join("    ", massivs2));
+            while (true)
+            {
+                int atbilde = 0;
+                Console.WriteLine("1 - summēt.");
+                Console.WriteLine("2 - Atņemt.");
+                Console.WriteLine("3 - Reizināt.");
+                Console.WriteLine("4 - dalīt.");
+                Console.WriteLine("5 - vidējais aretmētiskais.");
+                Console.WriteLine("0 - iziet.");
+
+                Console.Write("izvēlēties opciju:");
+                atbilde = Convert.ToInt32(Console.ReadLine());
+                switch (atbilde)
+                {
+                    case 1:
+                        double[] summesanasrez = new double[massivs1.Length];
+                        for (int i = 0; i < massivs1.Length; i++)
+                        {
+                            summesanasrez[i] = massivs1[i] + massivs2[i];
+                        }
+                        Console.WriteLine("Summa: " + string.Join("    ", summesanasrez));
+                        break;
+                    case 2:
+                        double[] atnemsanasrez = new double[massivs1.Length];
+                        for (int i = 0; i < massivs1.Length; i++)
+                        {
+                            atnemsanasrez[i] = massivs1[i] - massivs2[i];
+                        }
+                        Console.WriteLine("Atņemt: " + string.Join("    ", atnemsanasrez));
+                        break;
+                    case 3:
+                        double[] reizinasasrez = new double[massivs1.Length];
+                        for (int i = 0; i < massivs1.Length; i++)
+                        {
+                            reizinasasrez[i] = massivs1[i] * massivs2[i];
+                        }
+                        Console.WriteLine("Reizināt: " + string.Join("    ", reizinasasrez));
+                        break;
+                    case 4:
+                        double[] dalisana = new double[massivs1.Length];
+                        for (int i = 0; i < massivs1.Length; i++)
+                        {
+                            if (massivs2[i] != 0)
+                            {
+                                dalisana[i] = massivs1[i] / massivs2[i];
+                            }
+                            else
+                            {
+                                dalisana[i] = 0;
+                                Console.WriteLine("Dalīšana ar nulli nav iespējama!");
+                            }
+                        }
+                        Console.WriteLine("Dalīt: " + string.Join("    ", dalisana));
+                        break;
+                    case 5:
+                        double videjaisaritmetiskais1 = massivs1.Average();
+                        double videjaisaritmetiskais2 = massivs2.Average();
+                        Console.WriteLine($"Pirmā massīva vidējais arītmētiskais ir {videjaisaritmetiskais1}, un otrā masīva vidējais arītmētiskais ir {videjaisaritmetiskais2}");
+                        Console.WriteLine($"Otrā masīva vidēja vērtība ir lielāka/mazāka par pirmā massīva vertību par {videjaisaritmetiskais2/videjaisaritmetiskais1}");
+
+                        break;
+                    case 0:
+                        Console.WriteLine("Iziet.");
+                        return;
+
+                    default:
+                        Console.WriteLine("Nepareiza izvēle.");
+                        break;
+                }
+               
+            }
+            Otrs();
+        }
+        static void Otrs()
+        {
+            Console.Write("Ievadiet massīva rindu skaitu: ");
+            int rind = Convert.ToInt32(Console.ReadLine()); 
+            Console.Write("Ievadiet massīva kollonu skaitu: ");
+            int koll = Convert.ToInt32(Console.ReadLine());
+            int[,] massivs3 = new int[rind, koll];
+            Random random = new Random();
+
+        }
+    }
+}
