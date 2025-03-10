@@ -1,0 +1,76 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Ievadiet masīva rindu skaitu: ");
+        int M = int.Parse(Console.ReadLine());
+        Console.Write("Ievadiet masīva kolonnu skaitu: ");
+        int N = int.Parse(Console.ReadLine());
+        int[,] masivs = new int[M, N];
+        InitMas(masivs);
+        PrintMas(masivs);
+        int min = MinMas(masivs);
+        Console.WriteLine($"Masīva mazākā vērtība: {min}");
+        int max = MaxMas(masivs);
+        Console.WriteLine($"Masīva lielākā vērtība: {max}");
+        Console.Write("Ievadiet skaitli, kuru meklēt: ");
+        int skaitlis = int.Parse(Console.ReadLine());
+        int skaitaReizes = Meklet(masivs, skaitlis);
+        Console.WriteLine($"Skaitlis {skaitlis} atkārtojas {skaitaReizes} reizes");
+    }
+    static void InitMas(int[,] masivs)
+    {
+        Random rnd = new Random();
+        for (int i = 0; i < masivs.GetLength(0); i++)
+        {
+            for (int j = 0; j < masivs.GetLength(1); j++)
+            {
+                masivs[i, j] = rnd.Next(1, 10); 
+            }
+        }
+    }
+    static void PrintMas(int[,] masivs)
+    {
+        Console.WriteLine("Masīva saturs:");
+        for (int i = 0; i < masivs.GetLength(0); i++)
+        {
+            for (int j = 0; j < masivs.GetLength(1); j++)
+            {
+                Console.Write(masivs[i, j] + " ");
+            }
+            Console.WriteLine();
+        }
+    }
+    static int MinMas(int[,] masivs)
+    {
+        int min = masivs[0, 0];
+        foreach (int val in masivs)
+        {
+            if (val < min)
+                min = val;
+        }
+        return min;
+    }
+    static int MaxMas(int[,] masivs)
+    {
+        int max = masivs[0, 0];
+        foreach (int val in masivs)
+        {
+            if (val > max)
+                max = val;
+        }
+        return max;
+    }
+    static int Meklet(int[,] masivs, int skaitlis)
+    {
+        int count = 0;
+        foreach (int val in masivs)
+        {
+            if (val == skaitlis)
+                count++;
+        }
+        return count;
+    }
+}
