@@ -1,4 +1,3 @@
-
 using System;
 using System.Linq;
 
@@ -56,22 +55,54 @@ namespace Funkcijas_KJ
 
         static double[] Summet(double[] a, double[] b)
         {
-            return a.Zip(b, (x, y) => x + y).ToArray();
+            int length = Math.Min(a.Length, b.Length);
+            double[] result = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                result[i] = a[i] + b[i];
+            }
+
+            return result;
         }
 
         static double[] Atnemt(double[] a, double[] b)
         {
-            return a.Zip(b, (x, y) => x - y).ToArray();
-        }
+            int length = Math.Min(a.Length, b.Length);
+            double[] result = new double[length];
 
+            for (int i = 0; i < length; i++)
+            {
+                result[i] = a[i] - b[i];
+            }
+
+            return result;
+        }
+            
         static double[] Reizinat(double[] a, double[] b)
         {
-            return a.Zip(b, (x, y) => x * y).ToArray();
+            int length = Math.Min(a.Length, b.Length);
+            double[] result = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                result[i] = a[i] * b[i];
+            }
+
+            return result;
         }
 
         static double[] Dalit(double[] a, double[] b)
         {
-            return a.Zip(b, (x, y) => y != 0 ? x / y : 0).ToArray();
+            int length = Math.Min(a.Length, b.Length);
+            double[] result = new double[length];
+
+            for (int i = 0; i < length; i++)
+            {
+                result[i] = b[i] != 0 ? a[i] / b[i] : 0;
+            }
+
+            return result;
         }
 
         static void VidejaisAritmetiskais(double[] a, double[] b)
@@ -81,7 +112,7 @@ namespace Funkcijas_KJ
             Console.WriteLine($"Masīva 1 vidējais: {avgA}, Masīva 2 vidējais: {avgB}");
             Console.WriteLine($"Masīva 2 vidējais ir {(avgB > avgA ? "lielāks" : "mazāks")} par Masīva 1 vidējo par {Math.Abs(avgB - avgA)}");
         }
-
+            
         static void IzvaditRezultatu(double[] rezultats)
         {
             Console.WriteLine("Rezultāts: " + string.Join(" ", rezultats));
