@@ -11,10 +11,12 @@ namespace Funkcijas_KJ
             double[] massivs1 = new double[10];
             double[] massivs2 = new double[10];
 
-            for (int i = 0; i < massivs1.Length; i++)
+            int index = 0;
+            foreach (var _ in massivs1)
             {
-                massivs1[i] = rand.Next(1, 101);
-                massivs2[i] = rand.Next(1, 101);
+                massivs1[index] = rand.Next(1, 101);
+                massivs2[index] = rand.Next(1, 101);
+                index++;
             }
 
             Console.WriteLine("Masīvs 1: " + string.Join(" ", massivs1));
@@ -58,9 +60,11 @@ namespace Funkcijas_KJ
             int length = Math.Min(a.Length, b.Length);
             double[] result = new double[length];
 
-            for (int i = 0; i < length; i++)
+            int index = 0;
+            foreach (var _ in result)
             {
-                result[i] = a[i] + b[i];
+                result[index] = a[index] + b[index];
+                index++;
             }
 
             return result;
@@ -71,9 +75,11 @@ namespace Funkcijas_KJ
             int length = Math.Min(a.Length, b.Length);
             double[] result = new double[length];
 
-            for (int i = 0; i < length; i++)
+            int index = 0;
+            foreach (var _ in result)
             {
-                result[i] = a[i] - b[i];
+                result[index] = a[index] - b[index];
+                index++;
             }
 
             return result;
@@ -84,9 +90,11 @@ namespace Funkcijas_KJ
             int length = Math.Min(a.Length, b.Length);
             double[] result = new double[length];
 
-            for (int i = 0; i < length; i++)
+            int index = 0;
+            foreach (var _ in result)
             {
-                result[i] = a[i] * b[i];
+                result[index] = a[index] * b[index];
+                index++;
             }
 
             return result;
@@ -97,9 +105,11 @@ namespace Funkcijas_KJ
             int length = Math.Min(a.Length, b.Length);
             double[] result = new double[length];
 
-            for (int i = 0; i < length; i++)
+            int index = 0;
+            foreach (var _ in result)
             {
-                result[i] = b[i] != 0 ? a[i] / b[i] : 0;
+                result[index] = b[index] != 0 ? a[index] / b[index] : 0;
+                index++;
             }
 
             return result;
