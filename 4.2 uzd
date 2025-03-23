@@ -1,0 +1,32 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp9
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Cik elementus izvadīt: ");
+            int elem = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Progresijas solis: ");
+            int prog = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Progresijas sākumu: ");
+            int progsak = Convert.ToInt32(Console.ReadLine());
+            Rekursija(elem, prog, progsak, 0);
+
+        }
+        static void Rekursija(int elem, int prog, int progsak, int index)
+        {
+            if (index >= elem)
+            {
+                return;
+            }
+            Console.WriteLine(progsak + prog);
+            Rekursija(elem, prog, progsak + prog, index + 1);
+        }
+    }
+}
