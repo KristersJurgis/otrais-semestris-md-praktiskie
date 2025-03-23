@@ -11,12 +11,10 @@ namespace Funkcijas_KJ
             double[] massivs1 = new double[10];
             double[] massivs2 = new double[10];
 
-            int index = 0;
-            foreach (var _ in massivs1)
+            for (int i = 0; i < massivs1.Length; i++)
             {
-                massivs1[index] = rand.Next(1, 101);
-                massivs2[index] = rand.Next(1, 101);
-                index++;
+                massivs1[i] = rand.Next(1, 101);
+                massivs2[i] = rand.Next(1, 101);
             }
 
             Console.WriteLine("Masīvs 1: " + string.Join(" ", massivs1));
@@ -31,16 +29,16 @@ namespace Funkcijas_KJ
                 switch (atbilde)
                 {
                     case 1:
-                        IzvaditRezultatu(Summet(massivs1, massivs2));
+                        Summet(massivs1, massivs2);
                         break;
                     case 2:
-                        IzvaditRezultatu(Atnemt(massivs1, massivs2));
+                        Atnemt(massivs1, massivs2);
                         break;
                     case 3:
-                        IzvaditRezultatu(Reizinat(massivs1, massivs2));
+                        Reizinat(massivs1, massivs2);
                         break;
                     case 4:
-                        IzvaditRezultatu(Dalit(massivs1, massivs2));
+                        Dalit(massivs1, massivs2);
                         break;
                     case 5:
                         VidejaisAritmetiskais(massivs1, massivs2);
@@ -55,74 +53,54 @@ namespace Funkcijas_KJ
             }
         }
 
-        static double[] Summet(double[] a, double[] b)
+        static void Summet(double[] massivs1, double[] massivs2)
         {
-            int length = Math.Min(a.Length, b.Length);
-            double[] result = new double[length];
-
-            int index = 0;
-            foreach (var _ in result)
+            double[] result = new double[massivs1.Length];
+            for (int i = 0; i < massivs1.Length; i++)
             {
-                result[index] = a[index] + b[index];
-                index++;
+                result[i] = massivs1[i] + massivs2[i];
             }
-
-            return result;
+            Console.WriteLine(string.Join(" ", result));
         }
 
-        static double[] Atnemt(double[] a, double[] b)
+        static void Atnemt(double[] massivs1, double[] massivs2)
         {
-            int length = Math.Min(a.Length, b.Length);
-            double[] result = new double[length];
-
-            int index = 0;
-            foreach (var _ in result)
+            double[] result = new double[massivs1.Length];
+            for (int i = 0; i < massivs1.Length; i++)
             {
-                result[index] = a[index] - b[index];
-                index++;
+                result[i] = massivs1[i] - massivs2[i];
             }
-
-            return result;
-        }
-            
-        static double[] Reizinat(double[] a, double[] b)
-        {
-            int length = Math.Min(a.Length, b.Length);
-            double[] result = new double[length];
-
-            int index = 0;
-            foreach (var _ in result)
-            {
-                result[index] = a[index] * b[index];
-                index++;
-            }
-
-            return result;
+            Console.WriteLine(string.Join(" ", result));
         }
 
-        static double[] Dalit(double[] a, double[] b)
+        static void Reizinat(double[] massivs1, double[] massivs2)
         {
-            int length = Math.Min(a.Length, b.Length);
-            double[] result = new double[length];
-
-            int index = 0;
-            foreach (var _ in result)
+            double[] result = new double[massivs1.Length];
+            for (int i = 0; i < massivs1.Length; i++)
             {
-                result[index] = b[index] != 0 ? a[index] / b[index] : 0;
-                index++;
+                result[i] = massivs1[i] * massivs2[i];
             }
-
-            return result;
+            Console.WriteLine(string.Join(" ", result));
         }
 
-        static void VidejaisAritmetiskais(double[] a, double[] b)
+        static void Dalit(double[] massivs1, double[] massivs2)
         {
-            double avgA = a.Average();
-            double avgB = b.Average();
+            double[] result = new double[massivs1.Length];
+            for (int i = 0; i < massivs1.Length; i++)
+            {
+                result[i] = massivs2[i] != 0 ? massivs1[i] / massivs2[i] : 0;
+            }
+            Console.WriteLine(string.Join(" ", result));
+        }
+
+        static void VidejaisAritmetiskais(double[] massivs1, double[] massivs2)
+        {
+            double avgA = massivs1.Average();
+            double avgB = massivs2.Average();
             Console.WriteLine($"Masīva 1 vidējais: {avgA}, Masīva 2 vidējais: {avgB}");
             Console.WriteLine($"Masīva 2 vidējais ir {(avgB > avgA ? "lielāks" : "mazāks")} par Masīva 1 vidējo par {Math.Abs(avgB - avgA)}");
         }
-            
+
         static void IzvaditRezultatu(double[] rezultats)
         {
             Console.WriteLine("Rezultāts: " + string.Join(" ", rezultats));
