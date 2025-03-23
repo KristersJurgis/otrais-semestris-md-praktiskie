@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp4
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Ievadiet masiva garumu: ");
+            int mass = Convert.ToInt32(Console.ReadLine());
+            string[] randomStrings = Initarray(mass);
+            PrintArray(randomStrings);
+        }
+
+        static string[] Initarray(int mass)
+        {
+            Random rand = new Random();
+            string[] massivs = new string[mass];
+
+            for (int i = 0; i < mass; i++)
+            {
+                massivs[i] = GetRandomString(rand.Next(2, 11), rand);
+            }
+            return massivs;
+        }
+
+        static string GetRandomString(int length, Random rand)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+            char[] randomString = new char[length];
+            for (int i = 0; i < length; i++)
+            {
+                randomString[i] = chars[rand.Next(chars.Length)];
+            }
+            return new string(randomString);
+        }   
+          static void PrintArray(string[] masssivs)
+          {
+            foreach(string item in masssivs)
+            {
+                Console.WriteLine(item);
+            }
+          }
+    }
+}
