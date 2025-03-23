@@ -1,0 +1,82 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp5
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Ievadiet rindu skaitu: ");
+            int x = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Ievadiet min vertibu: ");
+            int min = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Ievadiet max vertibu: ");
+            int max = Convert.ToInt32(Console.ReadLine());
+            int[][] massivs = InitArray(x, min, max);
+
+            PrintArrayForeach(massivs);
+            PrintArrayFor(massivs);
+        }
+        static int[][] InitArray(int x, int min, int max)
+        {
+            int[][] massivs = new int[x][];
+            Random rand = new Random();
+            for (int i = 0; i < x; i++)
+            {
+                int garums1 = rand.Next(4, 11);
+                massivs[i] = new int[garums1];
+                for (int j = 0; j < garums1; j++)
+                {
+                    massivs[i][j] = rand.Next(min, max + 1);
+                }
+                
+            }
+            return massivs;
+            
+        }
+        static string Lineinfo(int[] rinda)
+        {
+            int skaits = rinda.Length;
+            int summa = rinda.Sum();
+            double videjais = (double)summa / skaits;
+            return $"(Skaitļu skaits: {skaits}, Summa: {summa}, Vidējā vērtība: {videjais:F2})";
+
+        }
+        static void PrintArrayForeach(int[][] massivs)
+        {
+            foreach (int[] ieksa in massivs)
+            {
+                foreach(int cipars in ieksa)
+                {
+                    Console.Write(cipars + " ");
+
+                }
+                string info = Lineinfo(ieksa);
+                Console.WriteLine(info);
+            }
+            Console.WriteLine();
+        }
+        static void PrintArrayFor(int[][] massivs)
+        {
+            for (int i = 0; i < massivs.Length; i++)
+            {
+                for (int j = 0; j < massivs[i].Length; j++)
+                {
+                    Console.Write(massivs[i][j] + " ");
+                }
+                string info = Lineinfo(massivs[i]);
+                Console.WriteLine(info);
+            }
+            Console.WriteLine();
+
+        }
+
+    }
+}
