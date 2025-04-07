@@ -1,0 +1,109 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp12
+{
+    class Mala
+    {
+        public int Garums { get; set; }
+        public int Platums { get; set; }
+        public string Krasa { get; set; }
+        
+        public void Register()
+        {
+            Console.Write("Ievadiet malas garumu: ");
+            Garums = int.Parse(Console.ReadLine());
+            Console.Write("Ievadiet malas biezumu: ");
+            Platums = int.Parse(Console.ReadLine());
+            Console.Write("Ievadiet malas krāsu: ");
+            Krasa = Console.ReadLine();
+        }
+        public void Izvade()
+        {
+            Console.Write($"Malas garums {Garums}, kuras malas biezums ir {Platums}, un krāsa ir {Krasa}");
+        }
+    }
+    class Objekts
+    {
+        public int MaluSkaits { get; set; }
+        public Mala[] Malas { get; set; }
+        public string Krasa { get; set; }
+
+        public void Register()
+        {
+            Console.Write("Ievadiet objekta krāsu: ");
+            Krasa = Console.ReadLine();
+            Console.Write("Ievadiet Malu skaitu: ");
+            MaluSkaits = int.Parse(Console.ReadLine());
+            Malas = new Mala[MaluSkaits];
+            for (int i = 0; i < MaluSkaits; i++)
+            {
+                Console.WriteLine($"\nReģistrācija malai {i + 1}:");
+                Malas[i] = new Mala();
+                Malas[i].Register();
+            }
+
+            
+        }
+        public string IegutObjektaTipu()
+        {
+            if (MaluSkaits == 0) return "Nav objekts";
+            if (MaluSkaits == 1) return "Aplis";
+            if (MaluSkaits == 2) return "Līnija";
+
+            if (MaluSkaits == 3)
+            {
+                int g1 = Malas[0].Garums, g2 = Malas[1].Garums, g3 = Malas[2].Garums;
+
+                if (g1 == g2 && g2 == g3)
+                    return "Vienādmalu trijstūris";
+                else if (g1 == g2 || g2 == g3 || g1 == g3)
+                    return "Vienādsānu trijstūris";
+                else
+                    return "Dažādmalu trijstūris";
+            }
+
+            if (MaluSkaits == 4)
+            {
+                int g1 = Malas[0].Garums, g2 = Malas[1].Garums, g3 = Malas[2].Garums, g4 = Malas[3].Garums;
+
+                if (g1 == g2 && g2 == g3 && g3 == g4)
+                    return "Kvadrāts";
+                else if (g1 == g3 && g2 == g4)
+                    return "Taisnstūris";
+                else
+                    return "četrstūris";
+            }
+
+            return "Nezināms objekts";
+        
+        }
+        public void Izvade()
+        {
+            Console.WriteLine(IegutObjektaTipu());
+            Console.WriteLine(Krasa);
+            Console.WriteLine(MaluSkaits);
+            for (int i = 0; i < MaluSkaits; i++)
+            {
+                Malas[i].Izvade();
+                Console.WriteLine();
+
+            }
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Objekts user = new Objekts();
+            user.Register();
+            user.IegutObjektaTipu();
+            user.Izvade();
+        }
+    }
+}
+
