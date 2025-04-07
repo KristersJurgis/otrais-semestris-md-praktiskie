@@ -1,0 +1,127 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace ConsoleApp11
+{
+    public class Prece
+    {
+        public string Nosaukums { get; set; }
+        public double Cena { get; set; }
+
+
+        public void Register()
+        {
+            Console.Write("Ievadiet preci: ");
+            Nosaukums = Console.ReadLine();
+            Console.Write("Ievadiet cenu: ");
+            Cena = double.Parse(Console.ReadLine());
+
+        }
+        public void Izvade()
+        {
+            Console.Write(Nosaukums + " " + Cena + "EUR");
+        }
+    
+    }
+    public class Grozs
+    {
+        public int Skaits { get; set; }
+        public Prece[] Preces { get; set; }
+
+        public void Register()
+        {
+            Console.Write("Ievadiet preču skaitu: ");
+            Skaits = int.Parse(Console.ReadLine());
+            Preces = new Prece[Skaits];
+            for (int i = 0; i < Skaits; i++)
+            {
+                Preces[i] = new Prece();
+                Preces[i].Register();
+            }
+            
+        }
+        public double Kopsumma()
+        {
+            double summ = 0;
+            foreach (Prece nauda in Preces)
+            {
+                summ += nauda.Cena;
+            }
+            return summ; 
+        }
+        public void Izvade()
+        {
+            foreach (Prece kartupelis in Preces)
+            {
+                kartupelis.Izvade();
+                Console.WriteLine();
+            }
+            Console.WriteLine($"Preču kopsumma ir {Kopsumma()}");
+        }
+    }
+    public class Persona
+    {
+        public string Vards { get; set; }
+        private string Parole { get; set; }
+        
+        public Grozs Grozs { get; set; }
+        public double Lidzeklis { get; set; }
+
+        public void Register()
+        {
+            Console.WriteLine("Ievadiet Vārdu un Uzvārdu: ");
+            Vards = Console.ReadLine();
+            Console.WriteLine("Ievadiet Paroli");
+            Parole = Console.ReadLine();
+            Console.WriteLine("Ievadiet jūsu līdzekļi: ");
+            Lidzeklis = double.Parse(Console.ReadLine());
+            Grozs = new Grozs();
+            Grozs.Register();
+        }
+        public void PietiekLidzeklu()
+        {
+            double summ = Grozs.Kopsumma();
+            if (Lidzeklis >= summ)
+            {
+                Console.WriteLine("Pietiek Līdzekļu!");
+            }
+            else if (Lidzeklis < summ)
+            {
+                Console.WriteLine("Nepietiek Līdzekļu!");
+            }
+            else
+            {
+                Console.WriteLine("Error");
+            }
+        }
+        public void Izvade()
+        {
+            Console.WriteLine(Vards);
+            Console.WriteLine(Lidzeklis);
+            Console.WriteLine(Grozs);
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Persona cilveks = new Persona();
+            cilveks.Register();
+            cilveks.PietiekLidzeklu();
+            cilveks.Izvade();
+            Console.ReadKey();
+
+
+            
+        }
+
+    }
+}
