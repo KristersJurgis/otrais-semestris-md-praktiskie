@@ -1,0 +1,306 @@
+using System;
+using System.CodeDom;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp13
+{
+    public class Transports
+    {
+        public String Marka;
+        public String Modelis;
+        public int Izlaidumagads;
+        public String Numurzime;
+        public double Nobraukums;
+        public DateTime Tehniskapaskate;
+        
+        public void Register()
+        {
+            Console.WriteLine("Ievadiet automašīnas marku: ");
+            Marka = Console.ReadLine();
+            Console.WriteLine("Ievadiet automašīnas Modeli: ");
+            Modelis = Console.ReadLine();
+            Console.WriteLine("Ievadiet automašīnas izlaiduma gadu: ");
+            Izlaidumagads = int.Parse(Console.ReadLine());
+            Console.WriteLine("Ievadiet automašīnas numurzimi: ");
+            Numurzime = Console.ReadLine();
+            Console.WriteLine("Ievadiet automašīnas nobraukumu: ");
+            Nobraukums = Double.Parse(Console.ReadLine());
+            Console.WriteLine("Ievadiet automašīnas tehnisko apskati: ");
+            Tehniskapaskate = DateTime.Parse(Console.ReadLine());
+        } 
+
+        public void Izvade()
+        {
+            Console.WriteLine($"Automašīnas marka ir {Marka} un modelis {Modelis}");
+            Console.WriteLine($"Automašīnas izlaiduma gads ir {Izlaidumagads} un numur zime {Numurzime}");
+            Console.WriteLine($"Automašīnas nobraukums ir {Nobraukums} km un Tehniskas apskates datums ir {Tehniskapaskate}");
+            Console.WriteLine($"Mašinas vecums ir {AprekinatVecumu()} gadi");
+
+
+        }
+        public int AprekinatVecumu()
+        {
+            return DateTime.Now.Year - Izlaidumagads;
+        }
+        public void VaiJaveicTehniskaApskate()
+        {
+            if (AprekinatVecumu() > 2)
+            {
+                bool gadspag = (DateTime.Now - Tehniskapaskate).TotalDays > 365;
+                bool nobraukumspag = Nobraukums > 30000;
+                if (gadspag || nobraukumspag)
+                {
+                    Console.WriteLine("Jaiet tehniska apskate");    
+                }
+                else
+                {
+                    Console.WriteLine("Tehniska apskate nav vel nepieciesama");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Masinai tehniska apskate nav nepieciesama, nav pagajusi 2 gadi kops masina ir iznakusi");
+            }
+        }
+
+    }
+    public class Vaditajs
+    {
+        public string Vards;
+        public string Uzvards;
+        public string VaditajaApliecibasNr;
+        public DateTime VeselibasAplieciba;
+
+        public void Register()
+        {
+            Console.Write("Ievadiet vardu: ");
+            Vards = Console.ReadLine();
+            Console.Write("Ievadiet Uzvardu: ");
+            Uzvards = Console.ReadLine();
+            Console.Write("Ievadiet Vaditaja Apliecibas Nr: ");
+            VaditajaApliecibasNr = Console.ReadLine();
+            Console.Write("Ievadiet VeselibasAplieciba terminu: ");
+            VeselibasAplieciba = DateTime.Parse(Console.ReadLine());
+        }
+        public void Izvade()
+        {
+            Console.WriteLine($"Lietotaja vards un uzvards {Vards + Uzvards}");
+            Console.WriteLine($"Vaditaja apliecibas numurs {VaditajaApliecibasNr}, un velesibas apliecibas datums {VeselibasAplieciba}");
+        }
+        public bool VaiDrikstVadit()
+        {
+            if (VeselibasAplieciba >= DateTime.Today)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+    public class Autoparks
+    {
+        public string Nosaukums;
+        public Transports[] Transports;
+        public Vaditajs Vaditajs;
+        public int Skaits;
+        
+        public void Register()
+        {
+            Console.Write("Ievadiet autoparka nosaukumu: ");
+            Nosaukums = Console.ReadLine();
+            Console.Write("Cik auto skaitu jus velaties pievienot?: ");
+            Skaits = int.Parse(Console.ReadLine());
+            Transports = new Transports[Skaits];
+            for (int i = 0; i < Skaits; i++)
+            {
+                Console.WriteLine($"Auto registracija {i + 1}");
+                Transports[i] = new Transports();
+                Transports[i].Register();
+            }
+            Console.WriteLine("Vaditaja registracija");
+            Vaditajs = new Vaditajs();
+            Vaditajs.Register();
+        }
+        public void MekletTransportu()
+        {
+            Console.WriteLine("Ievadiet masinas numurzimi: ");
+            string num = Console.ReadLine();
+            bool atrasts = false;
+
+            foreach (var masina in Transports)
+            {
+                if (masina.Numurzime == num)
+                {
+                    Console.WriteLine("Transports ir atrasts");
+                    masina.Izvade();
+                    atrasts = true;
+                    break;
+                }
+            }
+            if (!atrasts)
+            {
+                Console.WriteLine($"Masina ar numurzimi {num} netika atrasta.");
+            }
+        }
+        public void VecakaisTransports()
+        {
+            Transports oldest = Transports[0];
+            foreach (var masina in Transports)
+            {
+                if (masina.Izlaidumagads < oldest.Izlaidumagads)
+                {
+                    oldest = masina;
+                }
+            }
+            Console.WriteLine($"Vecaka masina autoparka");
+            oldest.Izvade();
+        }
+        public void Izvade()
+        {
+            Console.WriteLine(Nosaukums);
+            Vaditajs.Izvade();
+
+            for (int i = 0; i < Skaits; i++)
+            {
+                Console.WriteLine($"Masina {i + 1}");
+                Transports[i].Izvade();
+                Console.WriteLine();
+            }
+        }
+    }
+    public class Program
+    {
+        static Autoparks Mekletautoparku(Autoparks[] Autopark, string Nosaukums)
+        {
+            foreach (var autoparks in Autopark)
+            {
+                if (autoparks.Nosaukums == Nosaukums)
+                {
+                    return autoparks;
+                }
+            }
+            return null; 
+        }
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Ievadiet autoparku skaitu: ");
+            int autparkuskaits = int.Parse(Console.ReadLine());
+            Autoparks[] autoparks = new Autoparks[autparkuskaits];
+            int tgdskaits = 0;
+            while (true)
+            {
+                Console.WriteLine("Izveleties opciju (rakstiet tikai ciparu izveletai opcijai)");
+                Console.WriteLine("1: Izveidot jaunu autoparku");
+                Console.WriteLine("2: Izvadit visu informaciju par visiem autoparkiem");
+                Console.WriteLine("3: Izvadit konkretu autoparku");
+                Console.WriteLine("4: Izvadit konkretu transport lidzekli pec numurzimes");
+                Console.WriteLine("5: Izvadit vissvecako transport lidzekli konkreta autoparka");
+                Console.WriteLine("6: Beigt");
+                int opcija = int.Parse(Console.ReadLine());
+
+                switch (opcija)
+                    {
+                    case 1:
+                        {
+                            if (tgdskaits < autoparks.Length)
+                            {
+                                autoparks[tgdskaits] = new Autoparks();
+                                autoparks[tgdskaits].Register();
+                                tgdskaits++;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Autoparku limits ir sasniegts");
+                                break;
+                            }
+                            break;
+
+                        }
+                    case 2:
+                        {
+                            for (int i = 0; i < tgdskaits; tgdskaits++)
+                            {
+                                Console.WriteLine($"Autoparks {i + 1}");
+                                autoparks[i].Izvade();
+                            }
+                            break;
+                        }
+                    case 3:
+                        {
+                            Console.WriteLine("Ievadiet autoparka nosaukumu: ");
+                            string nosaukumss = Console.ReadLine();
+                            Autoparks atrasts = Mekletautoparku(autoparks, nosaukumss);
+                            if (nosaukumss != null)
+                            {
+                                atrasts.Izvade();
+                            }
+                            else
+                            {
+                                Console.WriteLine("Autoparks Netika atrasts");
+                            }
+                            break;  
+                        }
+                    case 4:
+                        {
+                            Console.Write("Ievadiet masinas numur zimi ko velaties atrast: ");
+                            string meklejams = Console.ReadLine();
+                            bool atrastss = false;
+                            foreach (var Auto in autoparks) 
+                            {
+                                foreach (var transport in Auto.Transports)
+                                {
+                                    if (transport.Numurzime == meklejams)
+                                    {
+                                        Console.WriteLine($"Auto atrodas sada autoparka {Auto.Nosaukums}");
+                                        transport.Izvade();
+                                        atrastss = true;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (!atrastss)
+                            {
+                                Console.WriteLine("Sada numurzime neviena autoparka nav");
+                            }
+                            break;
+                        }
+                    case 5:
+                        {
+
+                            Console.WriteLine("Ievadiet autoparka nosaukumu: ");
+                            string nosaukumss = Console.ReadLine();
+                            Autoparks atrasts = Mekletautoparku(autoparks, nosaukumss);
+                            if (nosaukumss != null)
+                            {
+                                Console.WriteLine($"vecakais transports autoparka {nosaukumss}");
+                                atrasts.VecakaisTransports();
+                            }
+                            else
+                            {
+                                Console.WriteLine("Autoparks Netika atrasts");
+                            }
+                            break;
+
+                        }
+                    case 6:
+                        {
+                            return;
+                        }
+                    default:
+                        {
+                            Console.WriteLine("Nepareiza izvele");
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
