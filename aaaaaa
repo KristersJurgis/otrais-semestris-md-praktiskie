@@ -1,0 +1,203 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp6
+{
+    public class Sportists
+    {
+        public string Vards;
+        public int Vecums;
+        public string SportaVeids;
+
+        public void Register()
+        {
+            Console.Write("Ievadiet Vardu: ");
+            Vards = Console.ReadLine();
+            Console.Write("Ievadiet Vecumu: ");
+            Vecums = int.Parse(Console.ReadLine());
+            Console.Write("Ievadiet sporta veidu: ");
+            SportaVeids = Console.ReadLine();
+        }
+        public void Izvadit()
+        {
+            Console.WriteLine($"Sportista Vards ir  {Vards} un vecums ir {Vecums}");
+            Console.WriteLine($"Sportista sporta veids ir {SportaVeids}");
+
+        }
+        public bool VaiPilngadigs()
+        {
+            if (Vecums >= 18)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public class Treneris
+        {
+            public string Vards;
+            public DateTime SertifikatsDerigs;
+
+            public void Register()
+            {
+                Console.Write("Ievadiet trenera vardu: ");
+                Vards = Console.ReadLine();
+                Console.Write("Ievadiet Sertifikata deriguma terminu: ");
+                SertifikatsDerigs = DateTime.Parse(Console.ReadLine());
+            }
+            public void Izvadit()
+            {
+                Console.WriteLine($"Trenera vards ir {Vards} un sertfikata deriguma termins ir {SertifikatsDerigs}");
+            }
+            public void VaiSertifikatsDerigs()
+            {
+                if (SertifikatsDerigs > DateTime.Now)
+                {
+                    Console.WriteLine("Nav nepieciesamiba atjaunot sertifikatu.");
+                }
+                else
+                {
+                    Console.WriteLine("Ar steigu vaig atjauninat sertifikatu.");
+                }
+            }
+        }
+        public class Komanda
+        {
+            public string Nosaukums;
+            public Sportists[] Sportisti;
+            public Treneris Treneris;
+            public int Skaits;
+            public void Register()
+            {
+                Console.WriteLine("Ievadiet komandas nosaukumu: ");
+                Nosaukums = Console.ReadLine();
+                Console.Write("Ievadiet cik sportistu bus komanda: ");
+                Skaits = int.Parse(Console.ReadLine());
+                Sportisti = new Sportists[Skaits];
+                for (int i = 0; i > Skaits; i++)
+                {
+                    Console.WriteLine($"Sportista registracija {i + 1}");
+                    Sportisti[i] = new Sportists();
+                    Sportisti[i].Register();
+
+                }
+                Treneris = new Treneris();
+                Treneris.Register();
+            }
+            public void Izvadit()
+            {
+                Console.WriteLine($"Sporta koma {Nosaukums}");
+                Treneris.Izvadit();
+                for (int i = 0; i > Skaits; i++)
+                {
+                    Console.WriteLine($"Sportists {i + 1}");
+                    Sportisti[i].Izvadit();
+                    Console.WriteLine();
+                }
+            }
+            public void VecakaisSportists()
+            {
+                Sportists oldest = Sportisti[0];
+                foreach (var sportists in Sportisti)
+                {
+                    if (sportists.Vecums < oldest.Vecums)
+                    {
+                        oldest = sportists;
+                    }
+                }
+                Console.WriteLine("Vecakais sportists komanda");
+                oldest.Izvadit();
+            }
+        }
+        class Program
+        {
+            static Komanda Mekletkomandu(Komanda[] Komanda, string Nosaukums)
+            {
+                foreach (var sportist in Komanda)
+                {
+                    if (sportist.Nosaukums == Nosaukums)
+                    {
+                        return sportist;
+                    }
+                }
+                return null;
+            }
+            static void Main(string[] args)
+            {
+                Console.Write("Ievadiet komandu skaitu: ");
+                int skaits = int.Parse(Console.ReadLine());
+                Komanda[] komanda = new Komanda[skaits];
+                int index = 0;
+                while (true)
+                {
+                    Console.WriteLine("Izveleties opciju");
+                    Console.WriteLine("1. Registret Komandu");
+                    Console.WriteLine("2. Izvadit informaciju");
+                    Console.WriteLine("3. Meklet vecako sportistu komanda");
+                    Console.WriteLine("4. Beigt darbu");
+                    Console.Write("Jusu opcija (Vadiet tikai ciparu): ");
+                    int opcija = int.Parse(Console.ReadLine());
+
+                    switch (opcija)
+                    {
+                        case 1:
+                            {
+                                if (index < komanda.Length)
+                                {
+                                    komanda[index] = new Komanda();
+                                    komanda[index].Register();
+                                    index++;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Komandu limits jau ir sasniegts!");
+
+                                }
+                                break;
+                            }
+                        case 2:
+                            {
+                                for (int i = 0; i < index; i++)
+                                {
+                                    Console.WriteLine($"Komanda {i + 1}");
+                                    komanda[i].Izvadit();
+                                }
+                                break;
+                            }
+                        case 3:
+                            {
+                                Console.Write("Ievadiet Komandas nosaukumu: ");
+                                string nosaukums = Console.ReadLine();
+                                Komanda atrasts = Mekletkomandu(komanda, nosaukums);
+                                if (nosaukums != null)
+                                {
+                                    Console.Write("Vecakais sportists komanda tika atrasts");
+
+                                }
+                                else
+                                {
+                                    Console.WriteLine("Komanda netika atrasta");
+                                }
+                                break;
+                            }
+                        case 4:
+                            {
+                                return;
+                            }
+                        default:
+                            {
+                                Console.WriteLine("Nepareiza izvele");
+                                break;
+                            }
+                    }
+
+                }
+            }
+        }
+    }
+}
