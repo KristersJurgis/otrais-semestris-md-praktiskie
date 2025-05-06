@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp14
+{
+    class Calculator
+    {
+        public void kapinat(ref int x)
+        {
+            if (x != 0)
+            {
+                x = (int)Math.Pow(x, -1.0 / x);
+            }
+        }
+        public void Reizinat(ref int x, ref int y)
+        {
+            x = x * y;
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args) 
+        {
+            Calculator calc = new Calculator();
+            Console.Write("Ievadiet veselu skaitli x: ");
+            int x;
+            while (!int.TryParse(Console.ReadLine(), out x))
+            {
+                Console.WriteLine("Error");
+            }
+            Console.Write("Ievadiet veselu skaitli y: ");
+            int y;
+            while (!int.TryParse(Console.ReadLine(), out y))
+            {
+                Console.WriteLine("Error");
+            }
+            int xorg = x;
+            int yorg = y;
+            Console.WriteLine($"Orginala x value ir = {xorg}, Orginala y value ir {yorg}");
+            calc.kapinat(ref x);
+            Console.WriteLine($"Kapinata x value ir {x}");
+            x = xorg;
+            calc.Reizinat(ref x, ref y);
+            Console.WriteLine($"Pec reizinasanas x value ir {x}");
+        }
+    }
+}
