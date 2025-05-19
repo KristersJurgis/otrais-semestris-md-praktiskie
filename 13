@@ -1,0 +1,172 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp24
+{
+    public class Prece
+    {
+        public string Nosaukums;
+        public double Iepirksanas_cena;
+
+        public void Izvadit()
+        {
+            Console.WriteLine(Nosaukums + Iepirksanas_cena);
+        }
+    }
+    public class Partikas_Prece : Prece
+    {
+        public DateTime Deriguma_termins;
+        public bool Ir_alergisks;
+        public string Mervieniba;
+        public double Pardosanas_cena
+        {
+            get { return Iepirksanas_cena * 1.30; }
+        }
+        public void Register()
+        {
+            Console.WriteLine("Ievadiet Deriguma terminu: ");
+            Deriguma_termins = DateTime.Parse(Console.ReadLine());
+            Console.WriteLine("Ievadiet Vai ir alergisks: ");
+            Ir_alergisks = bool.Parse(Console.ReadLine());
+            Console.WriteLine("Mervieniba: ");
+            Mervieniba = Console.ReadLine();
+        }
+        public void Izvadit()
+        {
+            Console.WriteLine(Deriguma_termins + "  " + Ir_alergisks + "  " + Mervieniba + "  " + Pardosanas_cena);
+        }
+    }
+    public class Saimniecibas_Prece : Prece
+    {
+        public string Materials;
+        public bool Ir_bistama;
+        public double Pardosanas_cena
+        {
+            get { return Iepirksanas_cena * 1.50;  }
+        }
+        public void Register()
+        {
+            Console.WriteLine("Materiali: ");
+            Materials = Console.ReadLine();
+            Console.WriteLine("Ievadiet Vai ir bistams: ");
+            Ir_bistama = bool.Parse(Console.ReadLine());
+        }
+        public void Izvadit()
+        {
+            Console.WriteLine(Materials + " " + Ir_bistama + "  " + Pardosanas_cena);
+        }
+    }
+    public class Veikals
+    {
+        public string Nosaukums;
+        public int Partikas_precu;
+        public int Saimniecibas_precu;
+        public Partikas_Prece[] Partikas_Prece;
+        public Saimniecibas_Prece[] Saimniecibas_Prece;
+        
+        public void Register()
+        {
+            Console.WriteLine("Ievadiet nosaukumu: ");
+            Nosaukums = Console.ReadLine();
+            Console.WriteLine("Ievadiet partikas precu skaitu: ");
+            Partikas_precu = int.Parse(Console.ReadLine());
+            Console.WriteLine("Ievadiet saimniecibas precu skaitu: ");
+            Saimniecibas_precu = int.Parse(Console.ReadLine());
+            for (int i = 0; i < Partikas_precu; i++)
+            {
+                Console.WriteLine($"Partikas prece {i + 1}");
+                Partikas_Prece[i] = new Partikas_Prece();
+                Partikas_Prece[i].Register();
+            }
+            for (int y = 0; y < Saimniecibas_precu; y++)
+            {
+                Console.WriteLine($"Saimniecibas prece {y + 1}");
+                Saimniecibas_Prece[y] = new Saimniecibas_Prece();
+                Saimniecibas_Prece[y].Register();
+            }
+        }
+        public void Izvadit()
+        {
+            Console.WriteLine(Nosaukums);
+            Console.WriteLine($"Partikas precu skaits {Partikas_precu}, Saimniecibas Precu skaits {Saimniecibas_precu}");
+            for (int i = 0; i < Partikas_precu; i++)
+            {
+                Console.WriteLine($"Prece {i + 1}");
+                Partikas_Prece[i].Izvadit();
+            }
+            for (int y = 0; y < Saimniecibas_precu; y++)
+            {
+                Console.WriteLine($"Prece {y + 1}");
+                Saimniecibas_Prece[y].Izvadit();
+            }
+        }
+        public void Veikala_tips()
+        {
+            if (Partikas_Prece.Length > 0 && Saimniecibas_Prece.Length > 0)
+            {
+                Console.WriteLine("Lielveikals");
+            }
+            else if (Partikas_Prece.Length > 0 )
+            {
+                Console.WriteLine("Partikas veikals");
+            }
+            else if (Saimniecibas_Prece.Length > 0)
+            {
+                Console.WriteLine("Saimniecibas veikals");
+            }
+            else
+            {
+                Console.WriteLine("Error");
+            }
+        }
+        public void Atlasit_bistamu()
+        {
+            bool atrasts = false;
+
+            for (int i = 0; i < Saimniecibas_precu; i++)
+            {
+                if (Saimniecibas_Prece[i].Ir_bistama)
+                {
+                    Saimniecibas_Prece[i].Izvadit();
+                    atrasts = true;
+                }
+            }
+            if (!atrasts)
+            {
+                Console.WriteLine("Nav atrasta neviena bīstama saimniecības prece.");
+            }
+        }
+        public void Atlasit_arpus_terminus()
+        {
+            bool atrasts = true;
+            DateTime sodien = DateTime.Today;
+            for (int i = 0; i < Partikas_precu; i++)
+            {
+                if (Partikas_Prece[i].Deriguma_termins <= sodien)
+                {
+                    Partikas_Prece[i].Izvadit();
+                    atrasts = true;
+                }
+            }
+            if (!atrasts)
+            {
+                Console.WriteLine("Nav atrasta neviena prece ar beigušos vai šodien beidzošos derīguma termiņu.");
+            }
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Veikals veikals = new Veikals();
+            veikals.Register();
+            veikals.Izvadit();
+            veikals.Veikala_tips();
+            veikals.Atlasit_arpus_terminus();
+            veikals.Atlasit_bistamu();
+        }
+    }
+}
