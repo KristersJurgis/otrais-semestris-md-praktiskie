@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp21
+{
+    public class Operacija
+    {
+        public Operacija()
+        {
+            Console.WriteLine("Bez Parametriem izveidota operacija");
+        }
+        public Operacija(int vertiba)
+        {
+            Console.WriteLine(vertiba);
+        }
+        public Operacija(double vertiba)
+        {
+            Console.WriteLine(vertiba);
+        }
+        public Operacija(string vertiba)
+        {
+            Console.WriteLine(vertiba);
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Operacija op1 = new Operacija();
+
+            Console.WriteLine("Ievadiet int vertibu");
+            Operacija op2 = new Operacija(Console.ReadLine());
+            Console.WriteLine("Ievadiet double vertibu");
+            Operacija op3 = new Operacija(Console.ReadLine());
+            Console.WriteLine("Ievadiet string vertibu");
+            Operacija op4 = new Operacija(Console.ReadLine());
+        }
+    }
+}
