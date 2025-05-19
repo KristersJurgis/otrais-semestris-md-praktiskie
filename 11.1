@@ -1,0 +1,79 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp19
+{
+    class Produkts
+    {
+        private string nosaukums;
+        public string Nosaukums
+        {
+            get { return Nosaukums; }
+            set
+            {
+                if (value.Length <= 30)
+                {
+                    nosaukums = value;
+                }
+                else
+                {
+                    nosaukums = "Nedefinets";
+                }
+            }
+        }
+        private string kategorija; 
+        public string Kategorija
+        {
+            get { return Kategorija; }
+            set
+            {
+                if (Nosaukums != "nedefinēts")
+                {
+                    kategorija = value;
+                }
+                else
+                {
+                    Console.WriteLine("Error");
+                }
+            }
+        }
+
+        private int RazosanasGads;
+        public int razosanasgads
+        {
+            get { return RazosanasGads; }
+            set { RazosanasGads = value; }
+        }
+        public int Vecums
+        {
+            get { return DateTime.Now.Year - RazosanasGads; }
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Produkts produkts = new Produkts();
+            produkts.Nosaukums = Console.ReadLine();
+            Console.WriteLine("Ievadiet produkta nosaukumu (max 30 simboli):");
+            produkts.Nosaukums = Console.ReadLine();
+            Console.WriteLine($"Produkta nosaukums: {produkts.Nosaukums}");
+            Console.WriteLine("Ievadiet produkta kategoriju:");
+            produkts.Kategorija = Console.ReadLine();
+            Console.WriteLine($"Produkta kategorija: {produkts.Kategorija}");
+            Console.WriteLine("Ievadiet gadu");
+            if (int.TryParse(Console.ReadLine(), out int gads))
+            {
+                produkts.razosanasgads = gads;
+                Console.WriteLine($"Produkta vecums: {produkts.Vecums} gadi");
+            }
+            else
+            {
+                Console.WriteLine("Nepareizs gada formāts!");
+            }
+        }
+    }
+}
