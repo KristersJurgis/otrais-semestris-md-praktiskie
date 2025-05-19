@@ -1,0 +1,115 @@
+using System;
+
+namespace ConsoleApp15
+{
+    public struct Darbinieks
+    {
+        public int id;
+        public string vards;
+        public string uzvards;
+        public int bernu_sk;
+        public string amats;
+        public bool slodze;
+
+        public void Register()
+        {
+            Console.Write("Ievadiet darbinieka identifikacijas numuru: ");
+            id = int.Parse(Console.ReadLine());
+            Console.Write("Ievadiet darbinieka vardu: ");
+            vards = Console.ReadLine();
+            Console.Write("Ievadiet darbinieka uzvardu: ");
+            uzvards = Console.ReadLine();
+            Console.Write("Ievadiet darbinieka bernu skaits: ");
+            bernu_sk = int.Parse(Console.ReadLine());
+            Console.Write("Ievadiet darbinieka amatu ");
+            amats = Console.ReadLine();
+            Console.WriteLine("Ievadiet darbinieka slodzi true or false: ");
+            slodze = bool.Parse(Console.ReadLine());
+        }
+
+        public void Izvadit()
+        {
+            Console.WriteLine($"{id}    {vards}    {uzvards}   {bernu_sk}   {amats}    {slodze}");
+        }
+    }
+
+    class Program
+    {
+        static Darbinieks? IzvaditPecId(int id_meklet, Darbinieks[] darbinieki)
+        {
+            foreach (var darbinieks in darbinieki)
+            {
+                if (darbinieks.id == id_meklet)
+                {
+                    return darbinieks;
+                }
+            }
+            return null;
+        }
+
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Ievadit darbinieku skaitu: ");
+            int skaits = int.Parse(Console.ReadLine());
+            Darbinieks[] darbinieki = new Darbinieks[skaits];
+            int index = 0;
+
+            while (true)
+            {
+                Console.WriteLine("Ludzu ievadiet metodi:");
+                Console.WriteLine("1 - Ievadit darbinieku");
+                Console.WriteLine("2 - Izvadit visus darbiniekus");
+                Console.WriteLine("3 - Izvadit konkretu darbinieku pec ID");
+                Console.WriteLine("Jusu izvele: ");
+                int izvele = int.Parse(Console.ReadLine());
+
+                switch (izvele)
+                {
+                    case 1:
+                        {
+                            if (index < darbinieki.Length)
+                            {
+                                darbinieki[index] = new Darbinieks();
+                                darbinieki[index].Register();
+                                index++;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Darbinieku limits ir sasniegts!");
+                            }
+                            break;
+                        }
+                    case 2:
+                        {
+                            Console.WriteLine("id    vards    uzvards   bernu_sk   amats    slodze");
+                            for (int i = 0; i < index; i++)
+                            {
+                                darbinieki[i].Izvadit();
+                            }
+                            break;
+                        }
+                    case 3:
+                        {
+                            Console.WriteLine("Ievadiet darbinieka id: ");
+                            int id_meklet = int.Parse(Console.ReadLine());
+                            Darbinieks? found = IzvaditPecId(id_meklet, darbinieki);
+                            if (found.HasValue)
+                            {
+                                Console.WriteLine("Darbinieks atrasts:");
+                                Console.WriteLine("id    vards    uzvards   bernu_sk   amats    slodze");
+                                found.Value.Izvadit();
+                            }
+                            else
+                            {
+                                Console.WriteLine("Darbinieks ar šādu ID netika atrasts.");
+                            }
+                            break;
+                        }
+                    default:
+                        Console.WriteLine("Nepareiza izvēle!");
+                        break;
+                }
+            }
+        }
+    }
+}
