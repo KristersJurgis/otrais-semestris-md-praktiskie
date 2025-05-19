@@ -1,0 +1,65 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp17
+{
+    class MansMath
+    {
+        public static int Min(params int[] skaitlis)
+        {
+            if (skaitlis.Length == 0)
+            {
+                Console.WriteLine("Nav ierakstits skaitlis");
+            }
+            int min = skaitlis[0];
+            foreach (int var in skaitlis)
+            {
+                if (var < min)
+                {
+                    min = var;
+                }
+            }
+            return min;
+        }
+        public static int Max(params int[] skaitlis)
+        {
+            if (skaitlis.Length == 0)
+            {
+                Console.WriteLine("Nav ierakstits skaitlis");
+            }
+            int max = skaitlis[0];
+            foreach (int var in skaitlis)
+            {
+                if (var > max)
+                {
+                    max = var;
+                }
+            }
+            return max;
+
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Ievadiet skaitlu daudzumu: ");
+            int skaits = int.Parse(Console.ReadLine());
+
+            int[] skaitlis = new int[skaits];
+            for (int i = 0; i < skaits; i++)
+            {
+                Console.Write("Ievadiet skaitli: ");
+                skaitlis[i] = int.Parse(Console.ReadLine());
+            }
+            Console.WriteLine(MansMath.Min(3, 5, 1));
+            Console.WriteLine(MansMath.Max(3, 5, 1));
+
+            Console.WriteLine(MansMath.Min(10, -5, 2, 8, 0));
+            Console.WriteLine(MansMath.Max(10, -5, 2, 8, 0));
+        }
+    }
+}
