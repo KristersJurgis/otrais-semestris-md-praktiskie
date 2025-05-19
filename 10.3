@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp18
+{
+    class Program
+    {
+        public static int ParaSkaitluSumma(int[] mas, out int paraSkaitluSkaits)
+        {
+            int summa = 0;
+            paraSkaitluSkaits = 0;
+            foreach (int skaitlis in mas)
+            {
+                 if (skaitlis % 2 == 0)
+                {
+                    summa += skaitlis;
+                    paraSkaitluSkaits++;
+                }
+            }
+            return summa;
+        }
+        static void Main(string[] args)
+        {
+            Console.WriteLine("Ievadiet skaitlu daudzumu: ");
+            int skaits = int.Parse(Console.ReadLine());
+
+            int[] mas = new int[skaits];
+            Random rnd = new Random();
+            for (int i = 0; i < skaits; i++)
+            {
+                mas[i] = rnd.Next(1, 100);
+                Console.WriteLine(mas[i]);
+            }
+            int parasumma = ParaSkaitluSumma(mas, out int paraSkaitluSkaits);
+            Console.WriteLine($"Para skaitlu summa {parasumma}");
+            Console.WriteLine($"Para skaitlu summa {paraSkaitluSkaits}");
+        }
+    }
+}
