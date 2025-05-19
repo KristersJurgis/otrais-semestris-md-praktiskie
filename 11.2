@@ -1,0 +1,50 @@
+using Microsoft.SqlServer.Server;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp20
+{
+    public class Dzivnieks
+    {
+        public Dzivnieks()
+        {
+            Console.WriteLine("Izveidots Dzīvnieks");
+        }
+        ~Dzivnieks()
+        {
+            Console.WriteLine("Dzīvnieks iznīcināts");
+        }
+    }
+    public class Ziditajs
+    {
+        public Ziditajs()
+        {
+            Console.WriteLine("Izveidots Ziditajs");
+        }
+        ~Ziditajs()
+        {
+            Console.WriteLine("Ziditajs iznīcināts");
+        }
+    }
+    public class Kakis
+    {
+        public Kakis()
+        {
+            Console.WriteLine("Izveidots Kakis");
+        }
+        ~Kakis()
+        {
+            Console.WriteLine("Kakis iznīcināts");
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Kakis kakis = new Kakis();
+        }
+    }
+}
