@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp25
+{
+    struct SkaitlisStruct
+    {
+        public int x;
+    }
+
+    // Atsauču tips (klase)
+    class SkaitlisClass
+    {
+        public int x;
+    }
+
+    class Program
+    {
+        static void Main()
+        {
+            Console.WriteLine("=== VĒRTĪBU TIPS (struktūra) ===");
+            SkaitlisStruct a = new SkaitlisStruct();
+            a.x = 5;
+            SkaitlisStruct b = a; // Kopē vērtību
+            b.x = 10;
+
+            Console.WriteLine($"a.x = {a.x}"); // 5
+            Console.WriteLine($"b.x = {b.x}"); // 10
+
+            Console.WriteLine("\n=== ATSAUČU TIPS (klase) ===");
+            SkaitlisClass c = new SkaitlisClass();
+            c.x = 5;
+            SkaitlisClass d = c; // Kopē atsauci
+            d.x = 10;
+
+            Console.WriteLine($"c.x = {c.x}"); // 10
+            Console.WriteLine($"d.x = {d.x}"); // 10
+        }
+    }
+}
