@@ -1,0 +1,146 @@
+using System;
+using System.Text;
+
+public class myConsole
+{
+    static string tagad = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
+    
+    public static int NolasitKaInt()
+    {
+        Console.Write("Lūdzu, ievadiet veselu skaitli: ");
+        string ievade = Console.ReadLine();
+        
+        if (int.TryParse(ievade, out int skaitlis))
+        {
+            return skaitlis;
+        }
+        else
+        {
+            Console.WriteLine("Kļūda: Konvertācija uz skaitli neveiksmīga!");
+            return 0;
+        }
+    }
+    
+    public static void Izvadit(string text)
+    {
+        Console.WriteLine(text);
+    }
+    
+    public static void NomainitFonaKrasu()
+    {
+        Array colors = Enum.GetValues(typeof(ConsoleColor));
+        ConsoleColor currentBackground = Console.BackgroundColor;
+        ConsoleColor newColor;
+        
+        Random rnd = new Random();
+        do {
+            newColor = (ConsoleColor)colors.GetValue(rnd.Next(colors.Length));
+        } while (newColor == currentBackground || newColor == ConsoleColor.Black);
+        
+        Console.BackgroundColor = newColor;
+        Console.Clear();
+    }
+    
+    public static void NomainitBurtuKrasu()
+    {
+        Array colors = Enum.GetValues(typeof(ConsoleColor));
+        ConsoleColor currentForeground = Console.ForegroundColor;
+        ConsoleColor newColor;
+        
+        Random rnd = new Random();
+        do {
+            newColor = (ConsoleColor)colors.GetValue(rnd.Next(colors.Length));
+        } while (newColor == currentForeground || newColor == ConsoleColor.Black);
+        
+        Console.ForegroundColor = newColor;
+    }
+    
+    public static void FormatetVardu(string vards_uzvards)
+    {
+        string[] parts = vards_uzvards.Split(' ');
+        if (parts.Length >= 2)
+        {
+            string vards = parts[0];
+            string uzvards = parts[1];
+            Console.WriteLine($"{vards[0]}. {uzvards}");
+        }
+        else
+        {
+            Console.WriteLine(vards_uzvards);
+        }
+    }
+    
+    public static string IzveidotParoli(int garums)
+    {
+        const string burti = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const string mazieBurti = "abcdefghijklmnopqrstuvwxyz";
+        const string cipari = "0123456789";
+        const string simboli = "!@#$%^&*()_+-=";
+        
+        string validChars = burti + mazieBurti + cipari + simboli;
+        Random rnd = new Random();
+        StringBuilder parole = new StringBuilder();
+        
+        for (int i = 0; i < garums; i++)
+        {
+            int index = rnd.Next(validChars.Length);
+            parole.Append(validChars[index]);
+        }
+        
+        return parole.ToString();
+    }
+    
+    public static string SifretTekstu(string teksts)
+    {
+        StringBuilder sifrets = new StringBuilder();
+        foreach (char c in teksts)
+        {
+            sifrets.Append((char)(c + 3));
+        }
+        return sifrets.ToString();
+    }
+    
+    public static string AtsifretTekstu(string teksts)
+    {
+        StringBuilder atsifrets = new StringBuilder();
+        foreach (char c in teksts)
+        {
+            atsifrets.Append((char)(c - 3));
+        }
+        return atsifrets.ToString();
+    }
+}
+
+public class Program
+{
+    public static void Main()
+    {
+        Console.WriteLine($"Pašreizējais laiks: {myConsole.tagad}");
+        
+        // Nolasīt skaitli
+        int skaitlis = myConsole.NolasitKaInt();
+        myConsole.Izvadit($"Ievadītais skaitlis: {skaitlis}");
+        
+        // Nomainīt krāsas
+        myConsole.NomainitFonaKrasu();
+        myConsole.NomainitBurtuKrasu();
+        
+        // Formatēt vārdu
+        myConsole.FormatetVardu("Jānis Bērziņš");
+        
+        // Izveidot paroli
+        string parole = myConsole.IzveidotParoli(12);
+        myConsole.Izvadit($"Jaunā parole: {parole}");
+        
+        // Šifrēšana/atšifrēšana
+        string orignalText = "Slepena ziņa";
+        string encrypted = myConsole.SifretTekstu(orignalText);
+        string decrypted = myConsole.AtsifretTekstu(encrypted);
+        
+        myConsole.Izvadit($"Oriģināls: {orignalText}");
+        myConsole.Izvadit($"Šifrēts: {encrypted}");
+        myConsole.Izvadit($"Atšifrēts: {decrypted}");
+        
+        Console.ResetColor();
+    }
+}
