@@ -1,0 +1,61 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp3
+{
+    public class StudijuKurss
+    {
+        public string Nosaukums;
+        public int Kreditpunkti;
+        public double EKreditpunkti
+        {
+            get
+            {
+                return Kreditpunkti * 1.5;
+            }
+        }
+        public bool IrObligats;
+
+        public void Readdata()
+        {
+            Console.Write("Ievadiet kursa nosaukumu: ");
+            Nosaukums = Console.ReadLine();
+            Console.Write("Ievadiet Kredit punktu daudzumu: ");
+            Kreditpunkti = int.Parse(Console.ReadLine());
+            bool index = false;
+            while (!index)
+            {
+                Console.WriteLine("Ievadiet vai ir obligas: ");
+                string obligats = Console.ReadLine().ToLower();
+                if (obligats == "ja" || obligats == "jā")
+                {
+                    IrObligats = true;
+                    index = true;
+                }
+                else if (obligats == "ne" || obligats == "nē")
+                {
+                    IrObligats = false;
+                    index = true;
+                }
+            }
+        }
+        public void PrintData()
+        {
+            Console.WriteLine($"Kursa nosaukums: {Nosaukums}, Kreditpunktu daudzums: {Kreditpunkti}, EKreditpunkti: {EKreditpunkti}, vai ir obligati {IrObligats}");    
+        }
+    }
+    internal class Program
+    {
+        static FillArray(StudijuKurss[] kurss)
+        {
+
+        }
+        static void Main(string[] args)
+        {
+        }
+    }
+}
