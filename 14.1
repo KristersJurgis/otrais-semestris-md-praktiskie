@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConsoleApp3
@@ -45,17 +48,67 @@ namespace ConsoleApp3
         }
         public void PrintData()
         {
-            Console.WriteLine($"Kursa nosaukums: {Nosaukums}, Kreditpunktu daudzums: {Kreditpunkti}, EKreditpunkti: {EKreditpunkti}, vai ir obligati {IrObligats}");    
+            Console.WriteLine($"Kursa nosaukums: {Nosaukums}, Kreditpunktu daudzums: {Kreditpunkti}, EKreditpunkti: {EKreditpunkti}, vai ir obligati {IrObligats}");
         }
     }
     internal class Program
     {
-        static FillArray(StudijuKurss[] kurss)
+        static StudijuKurss[] FillArray()
+        { 
+            Console.WriteLine("");
+            int index = int.Parse(Console.ReadLine());
+            StudijuKurss[] kurss = new StudijuKurss[index];
+    
+           
+            for (int i = 0; i < index; i++)
+            {
+                kurss[i] = new StudijuKurss();
+                kurss[i].Readdata();   
+            }
+            return kurss;
+        }
+        static void PrintArray(StudijuKurss[] kurss)
         {
-
+            for (int y = 0; y < kurss.Length; y++)
+            {
+                kurss[y].PrintData();
+            }
+        }
+        static void PrintArrrayToFile(StudijuKurss[] kurss, string path)
+        {
+            using (StreamWriter writer = new StreamWriter(path))
+            {
+                foreach (var kurs in kurss)
+                {
+                    writer.WriteLine($"{kurs.Nosaukums};{kurs.Kreditpunkti};{kurs.EKreditpunkti};{kurs.IrObligats}");
+                }
+            }
+        }
+        static StudijuKurss[] ReadFromArrayFile(string path)
+        {
+            string[] lines = File.ReadAllLines(path);
+            StudijuKurss[] kurss = new StudijuKurss[lines.Length];
+            
+            for (int i = 0; i < lines.Length; i++)
+            {
+                string[] dalas = lines[i].Split(';');
+                kurss[i] = new StudijuKurss
+                {
+                    Nosaukums = dalas[0],
+                    Kreditpunkti = int.Parse(dalas[1]),
+                    IrObligats = bool.Parse(dalas[3])
+                };
+            }
+            return kurss;
         }
         static void Main(string[] args)
         {
+            string path = @"C:\Users\Kristers\Desktop\uni\prog\test.txt";
+            StudijuKurss[] primaismassivs = FillArray();
+            PrintArrrayToFile(primaismassivs, path);
+
+            StudijuKurss[] OtraisMassivs = ReadFromArrayFile(path);
+            PrintArray(OtraisMassivs);
         }
     }
 }
