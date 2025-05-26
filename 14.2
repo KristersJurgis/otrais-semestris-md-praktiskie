@@ -1,0 +1,94 @@
+using System;
+using System.IO;
+
+class ExceptionDemo
+{
+    static void Main()
+    {
+        Console.WriteLine("=== IZNĒMUMU DEMONSTRĀCIJA ===");
+        
+        // 1. Dalīšana ar 0
+        DemonstrateDivideByZero();
+        
+        // 2. Nepareiza konvertēšana
+        DemonstrateInvalidCast();
+        
+        // 3. Neeksistējošs fails
+        DemonstrateFileNotFound();
+        
+        // 4. Indekss ārpus robežām
+        DemonstrateIndexOutOfRange();
+        
+        Console.WriteLine("\nNospiediet jebkuru taustiņu, lai beigtu...");
+        Console.ReadKey();
+    }
+
+    static void DemonstrateDivideByZero()
+    {
+        Console.WriteLine("\n1. Dalīšana ar nulli:");
+        
+        try
+        {
+            int a = 10;
+            int b = 0;
+            int result = a / b;
+            Console.WriteLine($"Rezultāts: {result}");
+        }
+        catch (DivideByZeroException ex)
+        {
+            Console.WriteLine($"Kļūda: {ex.GetType().Name}");
+            Console.WriteLine($"Paziņojums: {ex.Message}");
+        }
+    }
+
+    static void DemonstrateInvalidCast()
+    {
+        Console.WriteLine("\n2. Nepareiza konvertēšana:");
+        
+        try
+        {
+            object obj = "šis nav skaitlis";
+            int number = (int)obj;
+            Console.WriteLine($"Konvertētais skaitlis: {number}");
+        }
+        catch (InvalidCastException ex)
+        {
+            Console.WriteLine($"Kļūda: {ex.GetType().Name}");
+            Console.WriteLine($"Paziņojums: {ex.Message}");
+        }
+    }
+
+    static void DemonstrateFileNotFound()
+    {
+        Console.WriteLine("\n3. Mēģinājums atvērt neeksistējošu failu:");
+        
+        try
+        {
+            string nonExistentFile = "neeksistējošs_fails.txt";
+            string content = File.ReadAllText(nonExistentFile);
+            Console.WriteLine($"Faila saturs: {content}");
+        }
+        catch (FileNotFoundException ex)
+        {
+            Console.WriteLine($"Kļūda: {ex.GetType().Name}");
+            Console.WriteLine($"Paziņojums: {ex.Message}");
+            Console.WriteLine($"Fails: {ex.FileName}");
+        }
+    }
+
+    static void DemonstrateIndexOutOfRange()
+    {
+        Console.WriteLine("\n4. Indekss ārpus masīva robežām:");
+        
+        try
+        {
+            int[] numbers = { 1, 2, 3 };
+            Console.WriteLine($"Ceturtais elements: {numbers[3]}");
+        }
+        catch (IndexOutOfRangeException ex)
+        {
+            Console.WriteLine($"Kļūda: {ex.GetType().Name}");
+            Console.WriteLine($"Paziņojums: {ex.Message}");
+        }
+    }
+}
