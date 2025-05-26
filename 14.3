@@ -1,0 +1,103 @@
+using System;
+using System.IO;
+
+class FileOperationsDemo
+{
+    static void Main()
+    {
+        Console.WriteLine("=== BINĀRO DATU RAKSTĪŠANA UN LASĪŠANA ===");
+        BinaryFileDemo();
+        
+        Console.WriteLine("\n=== TEKSTA FAILU DARBĪBAS ===");
+        TextFileDemo();
+        
+        Console.WriteLine("\nNospied jebkuru taustiņu, lai turpinātu...");
+        Console.ReadKey();
+    }
+
+    static void BinaryFileDemo()
+    {
+        // Bināro datu rakstīšana
+        string binaryFilePath = "data.bin";
+        
+        try
+        {
+            using (FileStream fs = new FileStream(binaryFilePath, FileMode.Create))
+            using (BinaryWriter writer = new BinaryWriter(fs))
+            {
+                int number = 42;
+                double pi = 3.14159;
+                string text = "Sveika, pasaule!";
+                bool flag = true;
+
+                writer.Write(number);
+                writer.Write(pi);
+                writer.Write(text);
+                writer.Write(flag);
+            }
+
+            Console.WriteLine($"Dati ierakstīti failā '{binaryFilePath}'");
+
+            // Bināro datu lasīšana
+            using (FileStream fs = new FileStream(binaryFilePath, FileMode.Open))
+            using (BinaryReader reader = new BinaryReader(fs))
+            {
+                int readNumber = reader.ReadInt32();
+                double readPi = reader.ReadDouble();
+                string readText = reader.ReadString();
+                bool readFlag = reader.ReadBoolean();
+
+                Console.WriteLine($"Nolasītie dati:");
+                Console.WriteLine($"Skaitlis: {readNumber}");
+                Console.WriteLine($"Pi vērtība: {readPi}");
+                Console.WriteLine($"Teksts: {readText}");
+                Console.WriteLine($"Būla vērtība: {readFlag}");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Kļūda: {ex.Message}");
+        }
+    }
+
+    static void TextFileDemo()
+    {
+        string textFilePath = "teksts.txt";
+        
+        try
+        {
+            // Rakstīšana teksta failā
+            using (StreamWriter writer = new StreamWriter(textFilePath))
+            {
+                writer.WriteLine("Šis ir teksta faila piemērs.");
+                writer.WriteLine("Otrā rinda.");
+                writer.WriteLine($"Datumš: {DateTime.Now}");
+            }
+
+            Console.WriteLine($"Teksts ierakstīts failā '{textFilePath}'");
+
+            // Lasīšana no teksta faila
+            Console.WriteLine("\nFaila saturs:");
+            using (StreamReader reader = new StreamReader(textFilePath))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    Console.WriteLine(line);
+                }
+            }
+
+            // Alternatīva lasīšanas metode
+            Console.WriteLine("\nAlternatīva lasīšanas metode (ReadToEnd):");
+            using (StreamReader reader = new StreamReader(textFilePath))
+            {
+                string content = reader.ReadToEnd();
+                Console.WriteLine(content);
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Kļūda: {ex.Message}");
+        }
+    }
+}
